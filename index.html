@@ -38,49 +38,58 @@
 body { font-family:var(--sf-pro); background:var(--color-bg); color:var(--color-text); line-height:1.47059; font-weight: 400; letter-spacing: -0.022em; -webkit-font-smoothing:antialiased; transition: background 0.3s, color 0.3s; }
 
 /* Nav Bar */
-nav { position:sticky; top:0; background:var(--nav-bg); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--color-border); z-index:100; transition: background 0.3s, border-color 0.3s; }
+nav { position:fixed; top:0; width: 100%; background:var(--nav-bg); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); border-bottom:1px solid var(--color-border); z-index:100; transition: background 0.3s, border-color 0.3s; }
 nav .container { max-width:980px; margin:0 auto; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; }
 .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--color-text); }
-.brand svg { width: 22px; height: 22px; fill: var(--color-text); }
+.brand-logo { width: 24px; height: 24px; } 
 .brand h1 { font-size:21px; font-weight:600; letter-spacing:-.01em; margin: 0; }
 nav a.nav-link { color:var(--color-text); text-decoration:none; font-size:12px; font-weight:400; padding:6px 12px; border-radius:12px; transition:background .2s; cursor:pointer; }
 nav a.nav-link:hover { background:var(--nav-hover); }
 nav .links { display:flex; gap:8px; }
 
-/* Hero Section */
-.hero { text-align:center; padding:80px 20px 0; max-width:980px; margin:0 auto; }
+/* Hero Section Full Screen */
+.hero { text-align:center; padding-top: 120px; max-width: 100%; display: flex; flex-direction: column; align-items: center; }
+.hero-content { max-width: 800px; padding: 0 20px; margin-bottom: 40px; }
 .hero h2 { font-size:64px; font-weight:700; letter-spacing:-.03em; margin-bottom:20px; line-height:1.05; }
-.hero p { font-size:28px; color:var(--color-text-secondary); font-weight:500; margin-bottom: 40px; letter-spacing: -0.01em; }
-.btn-primary { display: inline-block; background: var(--color-accent); color: #fff !important; font-size: 17px; font-weight: 400; padding: 12px 24px; border-radius: 980px; text-decoration: none; transition: transform 0.2s, background 0.2s; }
-.btn-primary:hover { background: #0077ED; transform: scale(1.02); text-decoration: none; }
-.hero-image-wrapper { margin-top: 60px; padding: 0 20px; }
-.hero-img { width: 100%; max-width: 800px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); display: block; margin: 0 auto; object-fit: cover; }
+.hero p { font-size:28px; color:var(--color-text-secondary); font-weight:500; margin-bottom: 32px; letter-spacing: -0.01em; }
+.btn-primary { display: inline-block; background: var(--color-text); color: var(--color-bg) !important; font-size: 17px; font-weight: 600; padding: 14px 28px; border-radius: 980px; text-decoration: none; transition: transform 0.2s, opacity 0.2s; }
+.btn-primary:hover { opacity: 0.8; transform: scale(1.02); text-decoration: none; }
+
+.hero-img-full { width: 100%; max-width: 1400px; display: block; margin: 0 auto; object-fit: cover; border-radius: 32px 32px 0 0; }
+
+/* Screenshots Carousel */
+.screenshots-section { padding: 80px 0; background: var(--color-surface); overflow: hidden; }
+.screenshots-container { display: flex; gap: 24px; overflow-x: auto; padding: 20px 0; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.screenshots-container::-webkit-scrollbar { display: none; }
+.screenshots-container img { height: 580px; border-radius: 28px; scroll-snap-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: contain; }
+.screenshots-container::before, .screenshots-container::after { content: ''; flex: 0 0 50vw; }
 
 /* Typography & Layout */
 .container { max-width:980px; margin:0 auto; padding:0 20px; }
-section { margin:120px 0; }
-section h2 { font-size:48px; font-weight:700; letter-spacing:-.015em; margin-bottom:48px; text-align: center; }
-section h3 { font-size:28px; font-weight:600; margin:40px 0 16px; letter-spacing:-.01em; }
-section h4 { font-size:21px; font-weight:600; margin:28px 0 12px; color:var(--color-text); }
-p { font-size:17px; line-height:1.47059; color:var(--color-text-secondary); margin-bottom:20px; font-weight: 400; }
-.lead-text { font-size: 21px; text-align: center; max-width: 700px; margin: 0 auto 60px auto; color: var(--color-text-secondary); }
+section { margin:140px 0; }
+section h2 { font-size:48px; font-weight:700; letter-spacing:-.015em; margin-bottom:24px; text-align: center; }
+.lead-text { font-size: 21px; text-align: center; max-width: 700px; margin: 0 auto 80px auto; color: var(--color-text-secondary); line-height: 1.5; }
 
-/* Landing Feature Grid */
-.feature-list-landing { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px; }
-.feature-item { background:var(--color-surface); padding:40px; border-radius:24px; transition: background 0.3s; }
-.feature-item h5 { font-size:24px; font-weight:600; margin-bottom:12px; color:var(--color-text); letter-spacing:-.01em; }
-.feature-item p { font-size:17px; line-height:1.47; color:var(--color-text-secondary); margin:0; }
+/* Sales Grid (Bento Box Style) */
+.sales-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:24px; }
+.sales-card { background:var(--color-surface); padding:48px 40px; border-radius:32px; display: flex; flex-direction: column; justify-content: center; transition: transform 0.3s; }
+.sales-card:hover { transform: scale(1.01); }
+.sales-card.large { grid-column: 1 / -1; align-items: center; text-align: center; padding: 64px 40px; }
+.sales-card.large p { max-width: 700px; margin: 0 auto; }
+.sales-card h3 { font-size:32px; font-weight:600; margin-bottom:16px; color:var(--color-text); letter-spacing:-.01em; }
+.sales-card p { font-size:19px; line-height:1.5; color:var(--color-text-secondary); margin:0; }
 
-/* Support Cards */
-.support-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-.support-card { background: var(--color-surface); border-radius: 24px; overflow: hidden; cursor: pointer; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
-.support-card:hover { transform: scale(1.03); }
-.support-card-img { width: 100%; aspect-ratio: 16/10; background: var(--color-border); object-fit: cover; display: block; }
-.support-card-content { padding: 24px; }
-.support-card-content h5 { font-size: 21px; font-weight: 600; margin-bottom: 8px; color: var(--color-text); }
-.support-card-content p { font-size: 15px; margin: 0; line-height: 1.4; }
+/* Download Section */
+.download-section { text-align: center; padding: 100px 20px; background: var(--color-surface); border-radius: 40px; margin: 100px auto; max-width: 980px; }
+.download-section h2 { font-size: 48px; font-weight: 700; margin-bottom: 20px; border: none; }
+.download-section p { font-size: 21px; color: var(--color-text-secondary); margin-bottom: 40px; }
+.download-assets { display: flex; flex-direction: column; align-items: center; gap: 32px; }
+.qr-code { width: 160px; height: 160px; background: #fff; padding: 12px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+.app-store-btn { display: inline-block; transition: transform 0.2s; }
+.app-store-btn:hover { transform: scale(1.02); }
+.app-store-btn img { height: 48px; }
 
-/* Modal Full Screen */
+/* Modals */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-bg); z-index: 1000; overflow-y: auto; opacity: 0; visibility: hidden; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, visibility 0.4s; }
 .modal-overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
 .modal-header { position: sticky; top: 0; display: flex; justify-content: flex-end; padding: 20px; background: var(--modal-bg); z-index: 10; padding-bottom: 10px; }
@@ -88,31 +97,40 @@ p { font-size:17px; line-height:1.47059; color:var(--color-text-secondary); marg
 .btn-close:hover { background: var(--color-border); }
 .modal-content { max-width: 800px; margin: 0 auto; padding: 20px 20px 80px; }
 .modal-content h2 { font-size: 48px; text-align: left; margin-bottom: 32px; }
+.modal-content h4 { font-size: 21px; font-weight: 600; margin: 28px 0 12px; }
+.modal-content p { font-size: 17px; line-height: 1.47; color: var(--color-text-secondary); margin-bottom: 20px; }
 .modal-content ul, .modal-content ol { margin: 20px 0 20px 24px; }
 .modal-content li { font-size: 17px; line-height: 1.47; color: var(--color-text-secondary); margin-bottom: 12px; }
+
+/* Support Grid inside Modal */
+.support-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 40px; }
+.support-card { background: var(--color-surface); border-radius: 24px; overflow: hidden; cursor: pointer; transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.support-card:hover { transform: scale(1.03); }
+.support-card-img { width: 100%; aspect-ratio: 16/10; background: var(--color-border); object-fit: cover; display: block; }
+.support-card-content { padding: 24px; }
+.support-card-content h5 { font-size: 21px; font-weight: 600; margin-bottom: 8px; color: var(--color-text); }
+.support-card-content p { font-size: 15px; margin: 0; line-height: 1.4; color: var(--color-text-secondary); }
 
 /* Modals Inner Elements (JSON Parsed) */
 .quote { background:var(--color-surface); border-left:4px solid var(--color-accent); padding:24px 28px; margin:32px 0; border-radius:12px; }
 .quote p { font-size:19px; font-style:italic; color:var(--color-text); margin:0; }
-.quote cite { display:block; margin-top:12px; font-size:15px; font-style:normal; font-weight:500; color:var(--color-text-secondary); }
-.modal-img { width: 100%; border-radius: 16px; margin: 24px 0; }
-.source-list { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--color-border); }
-.source-list h4 { font-size: 17px; margin-bottom: 16px; }
-.source-link { display: block; font-size: 14px; margin-bottom: 8px; color: var(--color-accent); text-decoration: none; }
-.source-link:hover { text-decoration: underline; }
 
 /* Footer */
-footer { border-top: 1px solid var(--color-border); padding:40px 20px; margin-top:120px; text-align:center; }
+footer { padding:40px 20px; text-align:center; margin-bottom: 40px; }
 footer p { font-size:12px; color:var(--color-text-secondary); margin-bottom: 0; }
 footer .footer-links { margin-top: 16px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
 footer .footer-links a { font-size: 12px; color: var(--color-text); text-decoration: none; cursor: pointer; }
 footer .footer-links a:hover { text-decoration: underline; }
 
 @media(max-width:768px) {
+    .hero { padding-top: 100px; }
     .hero h2 { font-size:44px; }
     .hero p { font-size:21px; }
     section h2 { font-size:36px; }
-    .modal-content h2 { font-size: 36px; }
+    .sales-card h3 { font-size:24px; }
+    .screenshots-container img { height: 440px; }
+    .download-section { margin: 60px 20px; padding: 60px 20px; }
+    .download-section h2 { font-size: 32px; }
 }
 </style>
 </head>
@@ -121,9 +139,7 @@ footer .footer-links a:hover { text-decoration: underline; }
 <nav>
     <div class="container">
         <a href="#" class="brand" onclick="window.scrollTo(0,0); return false;">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 22h20L12 2zm0 3.8l6.2 12.2H5.8L12 5.8z"/>
-            </svg>
+            <img src="logo.svg" alt="Lauris Logo" class="brand-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\'><path d=\'M12 2L2 22h20L12 2zm0 3.8l6.2 12.2H5.8L12 5.8z\' fill=\'currentColor\'/></svg>'">
             <h1>Lauris</h1>
         </a>
         <div class="links">
@@ -135,78 +151,97 @@ footer .footer-links a:hover { text-decoration: underline; }
 </nav>
 
 <div class="hero">
-    <h2>Studia con costanza.<br>Arriva agli esami senza ansia.</h2>
-    <p>L'app premium con una UX frictionless che trasforma i tuoi appunti e i tuoi piani di studio in sessioni guidate.</p>
-    <a href="#" class="btn-primary">Scarica per iOS</a>
-    
-    <div class="hero-image-wrapper">
-        <img src="hero-mockup.png" alt="Anteprima di Lauris Study OS" class="hero-img" onerror="this.style.display='none'">
+    <div class="hero-content">
+        <h2>Dal piano allo studio fatto.</h2>
+        <p>Lo Study OS premium con una UX frictionless che trasforma i tuoi appunti in sessioni guidate e progressi visibili.</p>
+        <a href="#download" class="btn-primary">Inizia la prova gratuita</a>
+    </div>
+    <img src="hero.png" alt="Anteprima completa di Lauris" class="hero-img-full" onerror="this.style.display='none'">
+</div>
+
+<div class="screenshots-section">
+    <div class="screenshots-container">
+        <img src="1.png" alt="Dashboard Oggi" onerror="this.style.display='none'">
+        <img src="2.png" alt="Libreria Corsi" onerror="this.style.display='none'">
+        <img src="3.png" alt="Tracker Obiettivi" onerror="this.style.display='none'">
+        <img src="4.png" alt="Focus Mode" onerror="this.style.display='none'">
+        <img src="5.png" alt="Libretto Carriera" onerror="this.style.display='none'">
     </div>
 </div>
 
 <div class="container">
     
     <section>
-        <h2>Un unico Study OS.<br>Zero distrazioni.</h2>
-        <p class="lead-text">Basta usare app di note, calendari frammentati e timer generici. Lauris organizza tutto in pochi tap, sconfigge la procrastinazione e ti fa arrivare all'esame preparato.</p>
+        <h2>Meno tab aperte.<br>Più studio completato.</h2>
+        <p class="lead-text">A Milano vedevamo la stessa scena ripetersi: 27 tab aperte, appunti su app diverse e scadenze sparse. L'ostacolo non è la voglia, è l'attrito tra pianificare e fare. Serviva un sistema per portarti all'azione ogni giorno.</p>
         
-        <div class="feature-list-landing">
-            <div class="feature-item">
-                <h5>📅 Oggi & Agenda</h5>
-                <p>Dashboard chiara con le lezioni del giorno e panoramica carriera. Live Activity integrata durante le lezioni.</p>
+        <div class="sales-grid">
+            <div class="sales-card large">
+                <h3>Study OS premium, non un archivio di note.</h3>
+                <p>A differenza di Notion o GoodNotes che organizzano ma non guidano, Lauris centralizza tutto in un'unica libreria (testo, audio, foto, PDF) e converte i materiali in una routine sostenibile con UX frictionless e feedback chiaro.</p>
             </div>
-            <div class="feature-item">
-                <h5>📚 Appunti Smart</h5>
-                <p>Libreria gerarchica (Corso > Argomento > Appunto). Integra testo, scrittura a mano, audio, foto e PDF.</p>
+            <div class="sales-card">
+                <h3>Un prossimo passo chiaro.</h3>
+                <p>Registra un esame e mappa gli argomenti. Il Tracker Obiettivi trasforma una scadenza in un piano eseguibile, riducendo l'indecisione nel momento di iniziare.</p>
             </div>
-            <div class="feature-item">
-                <h5>🎯 Tracker Obiettivi</h5>
-                <p>Registra gli esami, mappa gli argomenti e guarda la barra dei progressi riempirsi ad ogni sessione.</p>
+            <div class="sales-card">
+                <h3>Azione guidata.</h3>
+                <p>Avvia una Focus mode o un quiz in pochi tap. La sessione guidata trasforma l'intenzione vaga in un'azione concreta, azzerando la voglia di procrastinare.</p>
             </div>
-            <div class="feature-item">
-                <h5>⏱️ Sessioni Guidate</h5>
-                <p>Avvia sessioni di focus direttamente dall'app, riducendo le frizioni e azzerando la voglia di procrastinare.</p>
+            <div class="sales-card">
+                <h3>Progressi visibili.</h3>
+                <p>Segna gli argomenti come studiati e vedi salire la percentuale. Un libretto digitale avanzato monitora la tua media e calcola la previsione del voto di laurea.</p>
+            </div>
+            <div class="sales-card">
+                <h3>Riparti da qui.</h3>
+                <p>Se salti un giorno, niente colpe. Lauris ti offre Pillole premium—micro-guide pratiche su metodo e routine—per farti ripartire con una preparazione calma.</p>
             </div>
         </div>
     </section>
 
-    <section id="support-section">
-        <h2>Guide e Supporto</h2>
-        <p class="lead-text">Scopri come sfruttare al massimo ogni angolo di Lauris. Tocca una guida per esplorare le funzionalità nel dettaglio.</p>
-        
-        <div class="support-grid" id="support-grid-container">
-            </div>
-    </section>
+</div>
 
+<div id="download" class="download-section">
+    <h2>Il tuo prossimo passo, adesso.</h2>
+    <p>Scarica l'app e inizia il percorso verso il prossimo esame.</p>
+    
+    <div class="download-assets">
+        <img src="qr-code.png" alt="Scansiona il QR Code" class="qr-code" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'><rect width=\'100\' height=\'100\' fill=\'white\'/><rect x=\'10\' y=\'10\' width=\'80\' height=\'80\' fill=\'none\' stroke=\'black\' stroke-width=\'5\'/><circle cx=\'50\' cy=\'50\' r=\'20\' fill=\'black\'/></svg>'">
+        
+        <a href="https://apps.apple.com/us/app/lauris/id6759625379" target="_blank" class="app-store-btn">
+            <img src="Download_on_the_App_Store_Badge.svg" alt="Scarica su App Store" onerror="this.outerHTML='<div style=\'background:#000;color:#fff;padding:12px 24px;border-radius:12px;font-size:17px;font-weight:500;\'> Scarica su App Store</div>'">
+        </a>
+    </div>
 </div>
 
 <footer>
-    <p>&copy; 2026 Lauris. Tutti i diritti riservati. Lo Study OS per gli studenti che puntano in alto.</p>
     <div class="footer-links">
         <a onclick="openModal('modal-support')">Supporto</a>
         <a onclick="openModal('modal-privacy')">Privacy Policy</a>
         <a onclick="openModal('modal-termini')">Termini e Condizioni</a>
     </div>
+    <p style="margin-top: 16px;">&copy; 2026 Lauris. Tutti i diritti riservati. Fucina accademica.</p>
 </footer>
-
-<div id="modal-support-detail" class="modal-overlay">
-    <div class="modal-header">
-        <button class="btn-close" onclick="closeModal('modal-support-detail')">Chiudi</button>
-    </div>
-    <div class="modal-content" id="support-detail-content">
-        </div>
-</div>
 
 <div id="modal-support" class="modal-overlay">
     <div class="modal-header">
         <button class="btn-close" onclick="closeModal('modal-support')">Chiudi</button>
     </div>
     <div class="modal-content">
-        <h2>Supporto</h2>
-        <p>Per scoprire come funziona l'app, scorri la pagina principale fino alla sezione <strong>Guide e Supporto</strong> e tocca gli argomenti di tuo interesse.</p>
-        <p>Se hai bisogno di assistenza tecnica diretta o hai riscontrato un problema, puoi contattarci all'indirizzo email fornito sulla pagina dell'App Store o scriverci sui nostri canali social ufficiali.</p>
-        <button class="btn-primary" onclick="closeModal('modal-support'); document.getElementById('support-section').scrollIntoView({behavior: 'smooth'})" style="margin-top: 20px;">Vai alle Guide</button>
+        <h2>Supporto e Guide</h2>
+        <p>Scopri come sfruttare al massimo ogni angolo del tuo Study OS. Tocca una guida per esplorare il tuo prossimo passo.</p>
+        
+        <div class="support-grid" id="support-grid-container">
+            </div>
     </div>
+</div>
+
+<div id="modal-support-detail" class="modal-overlay" style="z-index: 1001;">
+    <div class="modal-header">
+        <button class="btn-close" onclick="closeModal('modal-support-detail')">Indietro</button>
+    </div>
+    <div class="modal-content" id="support-detail-content">
+        </div>
 </div>
 
 <div id="modal-privacy" class="modal-overlay">
@@ -220,23 +255,14 @@ footer .footer-links a:hover { text-decoration: underline; }
         <p>Crediamo che il tuo percorso accademico sia privato. Per questo motivo, Lauris è costruita per ridurre al minimo la raccolta di dati.</p>
         <h3>Nessuna condivisione di dati personali</h3>
         <p>Non vendiamo, non scambiamo e non trasferiamo a terzi le tue informazioni personali identificabili. I tuoi piani di studio, le tue note e i tuoi progressi non vengono analizzati per scopi pubblicitari.</p>
-        
         <h4>Dati aggregati Apple</h4>
-        <p>Riceviamo da Apple solo dati statistici e aggregati (es. numero di download o abbonamenti attivi) che non sono ricollegabili alla tua specifica identità.</p>
+        <p>Riceviamo da Apple solo dati statistici e aggregati non ricollegabili alla tua specifica identità.</p>
         <h4>Report di Crash</h4>
-        <p>Se l'app smette di funzionare improvvisamente, potremmo ricevere un log tecnico anonimo. Questo ci serve esclusivamente per individuare il bug e ripararlo nel prossimo aggiornamento.</p>
-        
-        <div class="quote">
-            <p>La tua evoluzione accademica è una storia personale. Noi ci limitiamo a fornirti lo strumento per scriverla.</p>
-        </div>
-        
+        <p>Se l'app smette di funzionare improvvisamente, potremmo ricevere un log tecnico anonimo. Questo ci serve esclusivamente per individuare il bug e ripararlo.</p>
+        <div class="quote"><p>"La tua evoluzione accademica è una storia personale. Noi ci limitiamo a fornirti lo strumento per scriverla."</p></div>
         <h3>Sicurezza</h3>
         <h4>Archiviazione Locale</h4>
-        <p>La sicurezza dei tuoi appunti è prioritaria. Attualmente, Lauris opera con una logica 'Local First'. Significa che il database dei tuoi corsi, le tue note e i tuoi piani di studio risiedono fisicamente sulla memoria del tuo dispositivo.</p>
-        <h4>Controllo totale</h4>
-        <p>Poiché i dati non vengono inviati a nostri server proprietari, tu sei l'unico custode delle tue informazioni. Nessuno dall'esterno può accedere ai tuoi materiali di studio.</p>
-        <h4>Backup</h4>
-        <p>Consigliamo di mantenere attivo il backup del dispositivo (es. iCloud Backup) per garantire che i dati locali siano salvati in caso di smarrimento del telefono.</p>
+        <p>Attualmente, Lauris opera con una logica 'Local First'. Significa che il database dei tuoi corsi, le tue note e i tuoi piani di studio risiedono fisicamente sulla memoria del tuo dispositivo. Tu sei l'unico custode delle tue informazioni.</p>
     </div>
 </div>
 
@@ -246,53 +272,38 @@ footer .footer-links a:hover { text-decoration: underline; }
     </div>
     <div class="modal-content">
         <h2>Termini e Condizioni</h2>
-        <p>Le regole per utilizzare Lauris in modo sicuro e responsabile.</p>
-        <h3>1. Introduzione e accettazione</h3>
-        <p>Benvenuto in Lauris. Scaricando o utilizzando l'app, accetti i presenti termini. Se non sei d'accordo con una qualsiasi parte di questi termini, ti invitiamo a non utilizzare il servizio.</p>
-        <h3>2. Descrizione del servizio (MVP)</h3>
-        <p>Lauris è uno Study OS che include funzionalità di pianificazione (Widget, Obiettivi), Libreria appunti, Sessioni guidate (Focus Mode) e monitoraggio progressi. L'app è fornita 'così com'è' e le funzionalità possono evolvere nel tempo.</p>
-        <h3>3. Licenza d'uso non esclusiva</h3>
-        <p>Ti concediamo una licenza limitata, non esclusiva e non trasferibile per utilizzare l'app a scopo personale e non commerciale, in accordo con questi termini.</p>
-        <h3>4. Account utente e responsabilità</h3>
-        <p>Sei responsabile della sicurezza del tuo dispositivo e dell'accesso all'app. Poiché i dati sono salvati localmente, sei responsabile del loro backup tramite i sistemi del tuo dispositivo.</p>
-        <h3>5. Contenuti generati dall'utente (UGC)</h3>
-        <p>Gli appunti, i piani e i dati che inserisci in Lauris sono tuoi. Non rivendichiamo alcuna proprietà sui tuoi contenuti di studio.</p>
-        <h3>6. Comportamenti vietati</h3>
-        <p>Non è consentito: effettuare reverse engineering dell'app, utilizzare l'app per scopi illegali, o tentare di aggirare le protezioni di sicurezza.</p>
-        <h3>7. Proprietà intellettuale</h3>
-        <p>Il marchio Lauris, il logo, il codice sorgente, il design dell'interfaccia e i contenuti editoriali (Pillole) sono proprietà esclusiva di Lauris e sono protetti dalle leggi sul copyright.</p>
-        <h3>8. Limitazione di responsabilità</h3>
-        <p>Lauris fornisce strumenti per organizzare lo studio, ma non garantisce risultati specifici, voti o superamento di esami. Non siamo responsabili per danni diretti o indiretti derivanti dall'uso o dall'impossibilità di usare l'app.</p>
-        <h3>9. Disclaimer legale</h3>
-        <p>Lauris non è un servizio medico, terapeutico o psicologico. Le 'Pillole' e i suggerimenti su stress o ansia sono di natura pratica e organizzativa, non clinica. Per problemi di salute, rivolgiti a un professionista.</p>
-        <h3>10. Terminazione</h3>
-        <p>Possiamo sospendere o terminare il supporto all'app in qualsiasi momento, senza preavviso, se riteniamo che vi sia stata una violazione di questi termini.</p>
-        <h3>11. Modifiche ai termini</h3>
-        <p>Ci riserviamo il diritto di modificare questi termini. Le modifiche saranno effettive dal momento della pubblicazione nell'app o tramite notifica.</p>
-        <h3>12. Privacy</h3>
-        <p>L'uso dell'app è regolato anche dalla nostra Privacy Policy, consultabile nella sezione dedicata dell'account.</p>
-        <h3>13. Legge applicabile e foro competente</h3>
-        <p>Questi termini sono regolati dalla legge italiana. Per qualsiasi controversia sarà competente in via esclusiva il Foro di Milano.</p>
-        <h3>14. Contatti</h3>
-        <p>Per domande su questi termini, puoi contattare il team di sviluppo all'indirizzo email di supporto indicato nell'App Store.</p>
-        <h3>15. Data di ultimo aggiornamento</h3>
-        <p>Febbraio 2026.</p>
+        <p>Le regole per utilizzare Lauris in modo sicuro e responsabile. (Aggiornato a Febbraio 2026)</p>
+        <ul>
+            <li><strong>1. Introduzione:</strong> Scaricando o utilizzando l'app, accetti i presenti termini. Se non sei d'accordo, ti invitiamo a non utilizzare il servizio.</li>
+            <li><strong>2. Servizio:</strong> Lauris è uno Study OS fornito 'così com'è'. Le funzionalità possono evolvere nel tempo.</li>
+            <li><strong>3. Licenza:</strong> Ti concediamo una licenza limitata, non esclusiva e personale.</li>
+            <li><strong>4. Account:</strong> Sei responsabile della sicurezza del tuo dispositivo. Poiché i dati sono locali, sei responsabile del loro backup.</li>
+            <li><strong>5. UGC:</strong> Gli appunti, i piani e i dati che inserisci sono tuoi. Non rivendichiamo alcuna proprietà.</li>
+            <li><strong>6. Comportamenti vietati:</strong> Non è consentito il reverse engineering dell'app o l'uso per scopi illegali.</li>
+            <li><strong>7. Limitazione di responsabilità:</strong> Lauris fornisce strumenti per organizzare lo studio, ma non garantisce voti o il superamento di esami. Non siamo responsabili per danni diretti o indiretti.</li>
+            <li><strong>8. Disclaimer legale:</strong> Lauris non è un servizio medico o psicologico. Le 'Pillole' sono di natura pratica e organizzativa.</li>
+            <li><strong>9. Legge applicabile:</strong> Questi termini sono regolati dalla legge italiana. Foro esclusivo di Milano.</li>
+        </ul>
     </div>
 </div>
 
 <script>
-    // Funzioni Gestione Modali
     function openModal(modalId) {
         document.getElementById(modalId).classList.add('active');
-        document.body.style.overflow = 'hidden'; // Blocca scroll pagina sottostante
+        document.body.style.overflow = 'hidden';
     }
     
     function closeModal(modalId) {
         document.getElementById(modalId).classList.remove('active');
-        document.body.style.overflow = ''; // Ripristina scroll
+        // Se sto chiudendo il dettaglio supporto, torno alla modale hub principale
+        if(modalId === 'modal-support-detail') {
+            document.getElementById('modal-support').classList.add('active');
+        } else {
+            document.body.style.overflow = '';
+        }
     }
 
-    // JSON Fornito
+    // JSON Dati Supporto
     const supportData = [
         {
             "id": "oggi",
@@ -300,25 +311,13 @@ footer .footer-links a:hover { text-decoration: underline; }
             "title": "Oggi: il tuo punto di partenza",
             "description": "Una dashboard chiara per capire subito cosa fare, senza perderti tra mille tab aperte.",
             "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Tutto in un colpo d'occhio",
-                    "text": "La schermata 'Oggi' è progettata per ridurre il rumore mentale. Qui Lauris raccoglie solo le informazioni essenziali per affrontare la giornata corrente, permettendoti di passare dalla pianificazione all'azione in pochi istanti."
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Lezioni del giorno", "description": "Visualizza orari e aule delle lezioni previste per oggi." },
-                        { "title": "Promemoria esami", "description": "Tieni sotto controllo i giorni mancanti alle prossime scadenze importanti." },
-                        { "title": "Panoramica carriera", "description": "Un rapido check sui tuoi dati principali, senza distrazioni." }
-                    ]
-                },
-                {
-                    "type": "paragraph",
-                    "text": "Ogni mattina, apri questa sezione per orientarti. Non serve cercare altrove: il tuo piano quotidiano parte da qui."
-                }
-            ],
-            "sources": []
+                { "type": "paragraph", "title": "Tutto in un colpo d'occhio", "text": "La schermata 'Oggi' è progettata per ridurre il rumore mentale. Qui Lauris raccoglie solo le informazioni essenziali per affrontare la giornata." },
+                { "type": "list", "items": [
+                    { "title": "Lezioni del giorno", "description": "Visualizza orari e aule delle lezioni previste per oggi." },
+                    { "title": "Promemoria esami", "description": "Tieni sotto controllo i giorni mancanti alle prossime scadenze importanti." },
+                    { "title": "Panoramica carriera", "description": "Un rapido check sui tuoi dati principali, senza distrazioni." }
+                ]}
+            ]
         },
         {
             "id": "corsi",
@@ -326,211 +325,76 @@ footer .footer-links a:hover { text-decoration: underline; }
             "title": "Corsi: la tua libreria ordinata",
             "description": "Centralizza appunti e materiali. Un sistema gerarchico semplice per ritrovare tutto in pochi tap.",
             "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Struttura solida, mente libera",
-                    "text": "Dimentica i file sparsi su dispositivi diversi. La sezione Corsi funge da archivio centrale del tuo Study OS. Abbiamo strutturato l'organizzazione in modo gerarchico per garantire la massima reperibilità."
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Corso", "description": "Il contenitore principale (es. Diritto Privato, Analisi I)." },
-                        { "title": "Argomento", "description": "Le macro-aree del corso, utili per spezzare la complessità." },
-                        { "title": "Appunto", "description": "La singola risorsa. Puoi creare capitoli per ogni argomento per scendere nel dettaglio." }
-                    ]
-                },
-                {
-                    "type": "paragraph",
-                    "title": "Formati supportati",
-                    "text": "Ogni studente ha il suo metodo. Dentro ogni appunto puoi integrare:"
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Testo e Scrittura a mano", "description": "Per chi ama digitare o usare la stilo." },
-                        { "title": "Audio e Foto", "description": "Per catturare lezioni dal vivo o schemi alla lavagna." },
-                        { "title": "File esterni", "description": "Allega PDF o slide direttamente nell'argomento pertinente." }
-                    ]
-                }
-            ],
-            "sources": []
-        },
-        {
-            "id": "editor-avanzato",
-            "image": "support-editor",
-            "title": "Editor: velocità del pensiero",
-            "description": "Trasforma idee sparse in appunti potenti e interattivi con comandi fulminei.",
-            "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Oltre il semplice testo",
-                    "text": "Dimentica i vecchi documenti disordinati. L'editor di Lauris è uno spazio di lavoro modulare in cui ogni paragrafo, immagine o grafico è un 'blocco' indipendente. Questo ti permette di riorganizzare gli appunti in un attimo, mantenendo sempre un layout pulito."
-                },
-                {
-                    "type": "photo",
-                    "name": "support-editor-blocks",
-                    "alt": "Anteprima del menu contestuale dell'editor a blocchi con i vari comandi disponibili"
-                },
-                {
-                    "type": "paragraph",
-                    "title": "Il potere del comando Slash (/)",
-                    "text": "Vogliamo che la tua concentrazione resti sul contenuto, non sui bottoni. Digita semplicemente '/' (slash) in un blocco vuoto per aprire il menu contestuale rapido e trasformare il testo in qualsiasi elemento visivo in una frazione di secondo."
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Struttura visiva", "description": "Usa Titoli, Sottotitoli, Citazioni e Divisori per dare una gerarchia chiara ai tuoi riassunti." },
-                        { "title": "Liste e Task", "description": "Crea elenchi puntati, numerati o checklist interattive per tenere traccia dei concetti da ripassare." },
-                        { "title": "Media e Riferimenti", "description": "Inserisci caroselli di immagini, mappe native, snippet di codice e anteprime di link web." },
-                        { "title": "Dati Complessi", "description": "Organizza le informazioni con Tabelle, genera Grafici dinamici o usa la TimeLine per tracciare eventi cronologici." }
-                    ]
-                },
-                {
-                    "type": "cit",
-                    "text": "Gli appunti migliori non sono quelli più lunghi, ma quelli strutturati per essere ricordati.",
-                    "person": "Il Team di Lauris"
-                },
-                {
-                    "type": "paragraph",
-                    "title": "Flessibilità e gesti nativi",
-                    "text": "L'editor supporta pienamente il Drag & Drop: puoi trascinare foto o link da Safari direttamente nei tuoi appunti. E se sbagli? Nessun problema. Usa i tasti Undo/Redo sulla tastiera oppure scuoti fisicamente l'iPhone (Shake-to-Undo) per annullare l'ultima modifica all'istante."
-                }
-            ],
-            "sources": [
-                { "title": "Annullare l'inserimento su iPhone (Shake-to-Undo)", "isBook": false, "author": "Apple Inc.", "url": "https://support.apple.com/it-it/guide/iphone/iphb4cb71db7/ios", "imageURL": null }
+                { "type": "paragraph", "title": "Struttura solida, mente libera", "text": "Dimentica i file sparsi su dispositivi diversi. Abbiamo strutturato l'organizzazione in modo gerarchico per garantire la massima reperibilità (Corso > Argomento > Appunto)." },
+                { "type": "list", "items": [
+                    { "title": "Testo e Scrittura a mano", "description": "Per chi ama digitare o usare la stilo." },
+                    { "title": "Audio e Foto", "description": "Per catturare lezioni dal vivo o schemi alla lavagna." },
+                    { "title": "File esterni", "description": "Allega PDF o slide direttamente nell'argomento pertinente." }
+                ]}
             ]
         },
         {
             "id": "study",
             "image": "support-study",
             "title": "Studio: dal piano all'azione",
-            "description": "Trasforma gli obiettivi in sessioni guidate e monitora i tuoi progressi.",
+            "description": "Trasforma gli obiettivi in sessioni guidate e monitora i tuoi progressi visibili.",
             "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Tracker Obiettivi",
-                    "text": "Questa è la sala macchine del tuo studio. Qui non ti limiti a segnare le date, ma costruisci il percorso per arrivarci preparato."
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Registra Esame", "description": "Crea un nuovo obiettivo legato a un Corso specifico." },
-                        { "title": "Mappa gli argomenti", "description": "All'interno dell'esami, elenca gli argomenti da studiare. Man mano che li completi, segnali come 'studiati'." },
-                        { "title": "Progressi visibili", "description": "Il sistema calcola automaticamente la percentuale di completamento dell'obiettivo complessivo. Saprai sempre a che punto sei." }
-                    ]
-                },
-                {
-                    "type": "paragraph",
-                    "title": "Sessione Guidata",
-                    "text": "Quando è ora di studiare, avvia una Sessione di focus. Questo trasforma un'intenzione vaga in un'azione concreta, riducendo l'ansia da prestazione."
-                }
-            ],
-            "sources": []
+                { "type": "paragraph", "title": "Tracker Obiettivi", "text": "Qui non ti limiti a segnare le date, ma costruisci il percorso per arrivarci preparato." },
+                { "type": "list", "items": [
+                    { "title": "Mappa gli argomenti", "description": "All'interno dell'esame, elenca gli argomenti. Man mano che li completi, segnali come 'studiati'." },
+                    { "title": "Progressi visibili", "description": "Il sistema calcola automaticamente la percentuale di completamento dell'obiettivo." }
+                ]},
+                { "type": "paragraph", "title": "Sessione Guidata", "text": "Quando è ora di studiare, avvia una Sessione di focus. Questo trasforma un'intenzione vaga in un'azione concreta." }
+            ]
         },
         {
             "id": "calendar",
             "image": "support-calendar",
-            "title": "Agenda: il tuo ritmo",
+            "title": "Agenda: il tuo ritmo settimanale",
             "description": "Pianifica le lezioni e sincronizza i tuoi tempi con la realtà universitaria.",
             "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Calendario Lezioni",
-                    "text": "L'Agenda di Lauris non è un calendario generico. È ottimizzata per la ciclicità universitaria. Configura il tuo orario settimanale una sola volta e lascia che l'app organizzi la visualizzazione."
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Configurazione Corsi", "description": "Imposta i corsi settimanali con orari e aule ricorrenti." },
-                        { "title": "Live Activity", "description": "Quando una lezione è in corso, Lauris mostra un'attività live sulla schermata di blocco, per non perdere mai il senso del tempo." }
-                    ]
-                },
-                {
-                    "type": "paragraph",
-                    "text": "Avere un'agenda chiara ti aiuta a proteggere gli spazi vuoti da dedicare alle sessioni di studio individuale."
-                }
-            ],
-            "sources": []
+                { "type": "paragraph", "title": "Calendario Lezioni", "text": "Configura il tuo orario settimanale una sola volta e lascia che l'app organizzi la visualizzazione ottimizzata per la ciclicità universitaria." },
+                { "type": "list", "items": [
+                    { "title": "Live Activity", "description": "Quando una lezione è in corso, Lauris mostra un'attività live sulla schermata di blocco." }
+                ]}
+            ]
         },
         {
             "id": "career",
             "image": "support-career",
             "title": "Carriera: libretto digitale",
-            "description": "Monitora la tua media e guarda al futuro con le previsioni.",
+            "description": "Monitora la tua media e guarda al futuro con le previsioni del voto.",
             "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Misura il tuo percorso",
-                    "text": "La sezione Carriera funge da libretto voti avanzato. Non serve a giudicarti, ma a darti consapevolezza sui risultati ottenuti."
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Aggiungi Voto", "description": "Registra l'esito di ogni esame completato." },
-                        { "title": "Media e Previsione", "description": "Visualizza la tua media attuale e una proiezione realistica del voto di laurea, basata sui crediti acquisiti." }
-                    ]
-                },
-                {
-                    "type": "paragraph",
-                    "text": "Avere i dati chiari ti aiuta a pianificare i prossimi passi con maggiore serenità e strategia."
-                }
-            ],
-            "sources": []
-        },
-        {
-            "id": "account",
-            "image": "support-account",
-            "title": "Account: profilo studente",
-            "description": "Gestisci le impostazioni, la privacy e trova supporto quando ne hai bisogno.",
-            "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Tutto sotto controllo",
-                    "text": "Nella sezione Account gestisci la tua identità all'interno di Lauris. Qui puoi accedere alle informazioni legali (Privacy, Termini e Condizioni) e verificare i dettagli di sicurezza."
-                },
-                {
-                    "type": "paragraph",
-                    "title": "Supporto e Guide",
-                    "text": "Se hai dubbi su una funzionalità o vuoi scoprire le ultime novità introdotte nello Study OS, questa è la sezione giusta. Troverai guide rapide per sfruttare al meglio ogni strumento."
-                }
-            ],
-            "sources": []
+                { "type": "paragraph", "title": "Misura il tuo percorso", "text": "Avere i dati chiari ti aiuta a pianificare i prossimi passi con maggiore serenità e strategia." },
+                { "type": "list", "items": [
+                    { "title": "Media e Previsione", "description": "Visualizza la tua media attuale e una proiezione realistica del voto di laurea, basata sui crediti acquisiti." }
+                ]}
+            ]
         },
         {
             "id": "customization",
             "image": "support-customization",
             "title": "Personalizzazione",
-            "description": "Adatta l'aspetto di Lauris alle tue preferenze visive e di lettura.",
+            "description": "Adatta l'aspetto di Lauris per ridurre l'affaticamento visivo.",
             "body": [
-                {
-                    "type": "paragraph",
-                    "title": "Comfort visivo",
-                    "text": "Passiamo molte ore sullo schermo. Per questo Lauris ti permette di adattare l'interfaccia per ridurre l'affaticamento e sentirti a tuo agio."
-                },
-                {
-                    "type": "list",
-                    "items": [
-                        { "title": "Avatar", "description": "Scegli l'immagine che ti rappresenta nel tuo profilo." },
-                        { "title": "Dark Mode", "description": "Ideale per le sessioni di studio serali o per chi preferisce toni scuri." },
-                        { "title": "Dimensione Testi", "description": "Aumenta la leggibilità per non sforzare la vista durante la lettura degli appunti o dei quiz." }
-                    ]
-                }
-            ],
-            "sources": [
-                { "title": "Attivare la dark mode", "isBook": false, "author": "Apple Inc.", "url": "https://support.apple.com/it-it/108350", "imageURL": null },
-                { "title": "Modificare le dimensioni del testo", "isBook": false, "author": "Apple Inc.", "url": "https://support.apple.com/it-it/102453", "imageURL": null }
+                { "type": "list", "items": [
+                    { "title": "Avatar", "description": "Scegli l'immagine che ti rappresenta nel tuo profilo." },
+                    { "title": "Dark Mode", "description": "Ideale per le sessioni di studio serali o per chi preferisce toni scuri." },
+                    { "title": "Dimensione Testi", "description": "Aumenta la leggibilità per non sforzare la vista." }
+                ]}
             ]
         }
     ];
 
-    // Inizializza le Card nella Home
     function renderSupportCards() {
         const container = document.getElementById('support-grid-container');
         supportData.forEach((item, index) => {
             const card = document.createElement('div');
             card.className = 'support-card';
-            // Quando si clicca una card, apro la modale col contenuto giusto
-            card.onclick = () => openSupportDetail(index);
+            card.onclick = () => {
+                document.getElementById('modal-support').classList.remove('active');
+                openSupportDetail(index);
+            };
             
             card.innerHTML = `
                 <img src="${item.image}.png" alt="${item.title}" class="support-card-img" onerror="this.style.display='none'">
@@ -543,56 +407,29 @@ footer .footer-links a:hover { text-decoration: underline; }
         });
     }
 
-    // Renderizza e Apre il contenuto di Dettaglio
     function openSupportDetail(index) {
         const data = supportData[index];
         const contentContainer = document.getElementById('support-detail-content');
         
-        // Costruiamo l'HTML in base ai blocchi del JSON
         let htmlBuilder = `<h2>${data.title}</h2>`;
-        
         data.body.forEach(block => {
             if (block.type === 'paragraph') {
                 if (block.title) htmlBuilder += `<h4>${block.title}</h4>`;
                 htmlBuilder += `<p>${block.text}</p>`;
-            } 
-            else if (block.type === 'list') {
+            } else if (block.type === 'list') {
                 htmlBuilder += `<ul>`;
                 block.items.forEach(item => {
                     htmlBuilder += `<li><strong>${item.title}:</strong> ${item.description}</li>`;
                 });
                 htmlBuilder += `</ul>`;
             }
-            else if (block.type === 'photo') {
-                // Anche qui, presumo sia .png.
-                htmlBuilder += `<img src="${block.name}.png" alt="${block.alt}" class="modal-img">`;
-            }
-            else if (block.type === 'cit') {
-                htmlBuilder += `
-                    <blockquote class="quote">
-                        <p>"${block.text}"</p>
-                        <cite>— ${block.person}</cite>
-                    </blockquote>
-                `;
-            }
         });
-
-        // Aggiungo la sezione Fonti se esistono
-        if (data.sources && data.sources.length > 0) {
-            htmlBuilder += `<div class="source-list"><h4>Fonti</h4>`;
-            data.sources.forEach(src => {
-                htmlBuilder += `<a href="${src.url}" target="_blank" class="source-link">${src.title} ↗</a>`;
-            });
-            htmlBuilder += `</div>`;
-        }
 
         contentContainer.innerHTML = htmlBuilder;
         openModal('modal-support-detail');
     }
 
-    // Avvia rendering all'apertura pagina
     window.onload = renderSupportCards;
-
 </script>
 </body>
 </html>
