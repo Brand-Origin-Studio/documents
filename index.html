@@ -59,10 +59,62 @@ nav .links { display:flex; gap:8px; }
 
 /* Screenshots Carousel */
 .screenshots-section { padding: 80px 0; background: var(--color-surface); overflow: hidden; }
-.screenshots-container { display: flex; gap: 24px; overflow-x: auto; padding: 20px 0; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-.screenshots-container::-webkit-scrollbar { display: none; }
-.screenshots-container img { height: 580px; border-radius: 28px; scroll-snap-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.1); object-fit: contain; }
-.screenshots-container::before, .screenshots-container::after { content: ''; flex: 0 0 50vw; }
+
+.screenshots-container { 
+    display: flex; 
+    gap: 20px; 
+    justify-content: center; /* Centra gli screen su Desktop */
+    align-items: center;
+    padding: 40px 20px; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+.screenshots-container img { 
+    flex: 1 1 0; /* Su desktop si dividono lo spazio perfettamente in 5 */
+    width: 100%;
+    height: auto; 
+    max-height: 70vh; /* Evita che diventino troppo alti su schermi piccoli */
+    border-radius: 24px; 
+    box-shadow: 0 16px 32px rgba(0,0,0,0.08); 
+    object-fit: contain; 
+}
+
+/* Modifiche per Typography & Layout... mantieni il tuo codice esistente qui */
+
+/* Modifiche Media Query per Mobile/Tablet (aggiungi/sostituisci in fondo al file CSS) */
+@media(max-width:768px) {
+    .hero { padding-top: 100px; }
+    .hero h2 { font-size:44px; }
+    .hero p { font-size:21px; }
+    section h2 { font-size:36px; }
+    .sales-card h3 { font-size:24px; }
+    .download-section { margin: 60px 20px; padding: 60px 20px; }
+    .download-section h2 { font-size: 32px; }
+
+    /* REGOLE MOBILE PER IL CAROUSEL (Scroll pagaiato) */
+    .screenshots-container { 
+        justify-content: flex-start; /* Allinea a sinistra per lo scroll */
+        overflow-x: auto; 
+        scroll-snap-type: x mandatory; 
+        -webkit-overflow-scrolling: touch; 
+        scrollbar-width: none; 
+        padding: 20px 5vw; /* Spazio laterale per centrare il primo */
+    }
+    .screenshots-container::-webkit-scrollbar { display: none; }
+    
+    .screenshots-container img { 
+        flex: 0 0 75vw; /* Su iPhone ogni screen prende il 75% della larghezza */
+        max-height: 60vh; 
+        scroll-snap-align: center; /* Effetto paginato al centro */
+    }
+    
+    /* Spaziatore invisibile per far scrollare bene l'ultimo elemento fino in fondo */
+    .screenshots-container::after { 
+        content: ''; 
+        flex: 0 0 5vw; 
+    }
+}
 
 /* Typography & Layout */
 .container { max-width:980px; margin:0 auto; padding:0 20px; }
