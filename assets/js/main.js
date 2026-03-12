@@ -186,3 +186,314 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+// --- INTERSECTION OBSERVER PER PRODUCT TOUR (FADE SCROLL) ---
+document.addEventListener("DOMContentLoaded", () => {
+    const tourSteps = document.querySelectorAll('.tour-step');
+    const tourImages = document.querySelectorAll('.tour-img');
+
+    if (tourSteps.length > 0 && tourImages.length > 0) {
+        // Opzioni: Trigger quando l'elemento arriva a metà schermo
+        const tourOptions = {
+            root: null,
+            rootMargin: '-40% 0px -40% 0px',
+            threshold: 0
+        };
+
+        const tourObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const currentStep = entry.target;
+                    const stepIndex = currentStep.getAttribute('data-step');
+
+                    // 1. Spegni tutti i testi e le immagini
+                    tourSteps.forEach(s => s.classList.remove('is-active'));
+                    tourImages.forEach(i => i.classList.remove('active'));
+
+                    // 2. Accendi il testo e l'immagine correnti
+                    currentStep.classList.add('is-active');
+                    const targetImg = document.querySelector(`.tour-img[data-image="${stepIndex}"]`);
+                    if (targetImg) targetImg.classList.add('active');
+                }
+            });
+        }, tourOptions);
+
+        tourSteps.forEach(step => tourObserver.observe(step));
+    }
+});
+
+// --- SPOTLIGHT EFFECT PER BENTO CARDS ---
+document.addEventListener("DOMContentLoaded", () => {
+    const cards = document.querySelectorAll('.bento-glass-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--x', `${x}px`);
+            card.style.setProperty('--y', `${y}px`);
+        });
+    });
+});
+
+// --- 3D CARD STACKING DEPTH EFFECT ---
+document.addEventListener("DOMContentLoaded", () => {
+    const stackCards = document.querySelectorAll('.stack-card');
+    
+    if (stackCards.length > 0) {
+        window.addEventListener('scroll', () => {
+            stackCards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                // Calcola quanto la card è vicina alla cima dello schermo (quando si blocca)
+                const distanceFromTop = rect.top;
+                
+                // Se la card è bloccata in alto e ce n'è un'altra che le sta scorrendo sopra
+                if (distanceFromTop <= 180) { // 180px è circa la zona di sticky
+                    // Calcola una scala dinamica basata sullo scroll
+                    // Più scorri giù, più la card si rimpicciolisce (fino a 0.9) e si scurisce
+                    const scaleValue = Math.max(0.9, 1 - (180 - distanceFromTop) * 0.001);
+                    const brightnessValue = Math.max(0.4, 1 - (180 - distanceFromTop) * 0.003);
+                    
+                    card.style.transform = `scale(${scaleValue})`;
+                    card.style.filter = `brightness(${brightnessValue})`;
+                } else {
+                    // Reset quando scorri verso l'alto
+                    card.style.transform = `scale(1)`;
+                    card.style.filter = `brightness(1)`;
+                }
+            });
+        }, { passive: true });
+    }
+});
+// ==========================================
+// UX PREMIUM FISICHE (OTTIMIZZATO 60FPS)
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // Controlla se l'utente è su un dispositivo touch (Mobile/Tablet)
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
+    // 1. MAGNETIC 3D MOCKUP (Solo per Mouse/Desktop)
+    if (!isTouchDevice) {
+        const mockupFrame = document.getElementById('magnetic-mockup');
+        const heroSection = document.querySelector('.hero-spatial');
+        
+        if (mockupFrame && heroSection) {
+            let rafId = null;
+            let targetX = 0, targetY = 0;
+
+            heroSection.addEventListener('mousemove', (e) => {
+                // Calcolo fluido
+                targetX = (window.innerWidth / 2 - e.pageX) / 70;
+                targetY = (window.innerHeight / 2 - e.pageY) / 70;
+
+                // Annulla frame precedenti
+                if (rafId) cancelAnimationFrame(rafId);
+                
+                rafId = requestAnimationFrame(() => {
+                    mockupFrame.style.transform = `rotateY(${targetX}deg) rotateX(${10 + targetY}deg) translateY(20px)`;
+                });
+            });
+
+            heroSection.addEventListener('mouseleave', () => {
+                if (rafId) cancelAnimationFrame(rafId);
+                mockupFrame.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                mockupFrame.style.transform = `rotateX(10deg) translateY(20px)`;
+            });
+
+            heroSection.addEventListener('mouseenter', () => {
+                mockupFrame.style.transition = 'none';
+            });
+        }
+    }
+
+    // 2. SPOTLIGHT EFFECT SULLE CARD BENTO (Solo Desktop)
+    if (!isTouchDevice) {
+        const bentoCards = document.querySelectorAll('.bento-glass-card');
+        
+        bentoCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                requestAnimationFrame(() => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--x', `${x}px`);
+                    card.style.setProperty('--y', `${y}px`);
+                });
+            });
+        });
+    }
+
+    // 3. EFFETTO PROFONDITÀ (STACKING CARDS)
+    const stackCards = document.querySelectorAll('.stack-card');
+    
+    // Lo attiviamo solo se lo schermo è > 980px (dove lo stacking è attivo in CSS)
+    if (stackCards.length > 0 && window.innerWidth > 980) {
+        let isScrolling = false;
+
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    stackCards.forEach((card) => {
+                        const rect = card.getBoundingClientRect();
+                        const distanceFromTop = rect.top;
+                        
+                        // Il valore 200 dipende dall'offset sticky
+                        if (distanceFromTop <= 200) { 
+                            const scaleValue = Math.max(0.92, 1 - (200 - distanceFromTop) * 0.0006);
+                            const brightnessValue = Math.max(0.4, 1 - (200 - distanceFromTop) * 0.0025);
+                            
+                            // Applica trasformazioni separate per GPU
+                            card.style.transform = `scale(${scaleValue}) translateZ(0)`;
+                            card.style.filter = `brightness(${brightnessValue})`;
+                        } else {
+                            card.style.transform = `scale(1) translateZ(0)`;
+                            card.style.filter = `brightness(1)`;
+                        }
+                    });
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        }, { passive: true });
+    }
+});
+
+// ==========================================
+// SCROLL-DRIVEN HERO MOCKUP (Calibrazione Perfetta)
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const heroMockup = document.getElementById('scroll-mockup');
+    const heroWrapper = document.getElementById('hero-hardware-wrapper');
+    
+    if (heroMockup && heroWrapper) {
+        let isScrolling = false;
+
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    const scrollProgress = Math.min(scrollY / (window.innerHeight * 0.8), 1);
+                    
+                    if (scrollProgress < 1) {
+                        // Inclinazione più dolce
+                        const rotateX = 12 + (scrollProgress * 15); 
+                        // Sprofonda meno e più lentamente (da 150px a 60px max)
+                        const translateY = scrollProgress * 60; 
+                        // Scaling leggerissimo
+                        const scale = 1 - (scrollProgress * 0.03); 
+                        
+                        // Il wrapper perde opacità in modo molto più graduale
+                        heroWrapper.style.opacity = 1 - (scrollProgress * 1.2);
+                        
+                        heroMockup.style.transform = `scale(${scale}) rotateX(${rotateX}deg) translateY(${translateY}px) translateZ(0)`;
+                    } else {
+                        // Quando ha superato la soglia, lo nascondiamo per non pesare sul rendering
+                        heroWrapper.style.opacity = 0;
+                    }
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        }, { passive: true });
+    }
+});
+
+// ==========================================
+// FISICA AVANZATA E MICRO-ANIMAZIONI
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // --- 1. EFFETTO NEBBIA (MANIFESTO) ---
+    // Ricicliamo l'Intersection Observer del tuo main.js, 
+    // ma lo applichiamo anche alla classe .blur-reveal
+    const blurElements = document.querySelectorAll('.blur-reveal');
+    const blurObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                blurObserver.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -15% 0px' });
+
+    blurElements.forEach(el => blurObserver.observe(el));
+
+
+    // --- 2. PROFONDITÀ DI CAMPO (STACKING CARDS + BLUR) ---
+    const stackCards = document.querySelectorAll('.stack-card');
+    
+    if (stackCards.length > 0 && window.innerWidth > 980) {
+        let isScrolling = false;
+
+        window.addEventListener('scroll', () => {
+            if (!isScrolling) {
+                window.requestAnimationFrame(() => {
+                    stackCards.forEach((card) => {
+                        const rect = card.getBoundingClientRect();
+                        const distanceFromTop = rect.top;
+                        
+                        // Quando la card si ferma e viene superata
+                        if (distanceFromTop <= 200) { 
+                            const scrollDepth = 200 - distanceFromTop;
+                            
+                            // Scale e Brightness come prima
+                            const scaleValue = Math.max(0.92, 1 - scrollDepth * 0.0006);
+                            const brightnessValue = Math.max(0.4, 1 - scrollDepth * 0.0025);
+                            
+                            // LA MAGIA: Depth of field (Blur) proporzionale
+                            // Più scorri in giù, più la card in background si sfoca (fino a 6px max)
+                            const blurValue = Math.min(6, scrollDepth * 0.03);
+                            
+                            card.style.transform = `scale(${scaleValue}) translateZ(0)`;
+                            card.style.filter = `brightness(${brightnessValue}) blur(${blurValue}px)`;
+                        } else {
+                            // Card in primo piano: nitida e grandezza normale
+                            card.style.transform = `scale(1) translateZ(0)`;
+                            card.style.filter = `brightness(1) blur(0px)`;
+                        }
+                    });
+                    isScrolling = false;
+                });
+                isScrolling = true;
+            }
+        }, { passive: true });
+    }
+
+    // --- 3. CONTATORE NUMERI (METRICHE) ---
+    const counters = document.querySelectorAll('.counter');
+    const speed = 60; // Più basso è, più è veloce
+
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const isFloat = target % 1 !== 0; // Controlla se è 28.5 o 110
+                
+                const updateCount = () => {
+                    const current = parseFloat(counter.innerText);
+                    // Calcola l'incremento
+                    const inc = target / speed;
+
+                    if (current < target) {
+                        counter.innerText = (current + inc).toFixed(isFloat ? 1 : 0);
+                        requestAnimationFrame(updateCount);
+                    } else {
+                        counter.innerText = target;
+                        // Aggiunge la classe 'done' al parent per mostrare la "L" di lode
+                        counter.parentElement.classList.add('done');
+                    }
+                };
+
+                updateCount();
+                observer.unobserve(counter); // Anima solo la prima volta
+            }
+        });
+    }, { threshold: 0.5 }); // Parte quando il numero è a metà schermo
+
+    counters.forEach(counter => counterObserver.observe(counter));
+});
